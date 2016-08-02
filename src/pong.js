@@ -5,6 +5,15 @@ class Vec
         this.x = x;
         this.y = y;
     }
+    get len()
+    {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+    set len(value) {
+        const f = value / this.len;
+        this.x *= f;
+        this.y *= f;
+    }
 }
 
 class Rect
@@ -56,6 +65,8 @@ class Pong
     {
         this._canvas = canvas;
         this._context = canvas.getContext('2d');
+
+        this.initialSpeed = 250;
 
         this.ball = new Ball;
 
@@ -110,6 +121,7 @@ class Pong
         if (b.vel.x === 0 && b.vel.y === 0) {
             b.vel.x = 200 * (Math.random() > .5 ? 1 : -1);
             b.vel.y = 200 * (Math.random() * 2 - 1);
+            b.vel.len = this.initialSpeed;
         }
     }
     reset()
