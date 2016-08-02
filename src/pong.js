@@ -42,6 +42,16 @@ class Pong
         this._context = canvas.getContext('2d');
 
         this.ball = new Ball;
+
+        let lastTime = null;
+        this._frameCallback = (millis) => {
+            if (lastTime !== null) {
+                const diff = millis - lastTime;
+                this.update(diff / 1000);
+            }
+            lastTime = millis;
+            requestAnimationFrame(this._frameCallback);
+        };
     }
     draw()
     {
@@ -52,6 +62,14 @@ class Pong
         const ball = this.ball;
         ctx.fillStyle = '#fff';
         ctx.fillRect(ball.pos.x, ball.pos.y, ball.size.x, ball.size.y);
+    }
+    update(dt)
+    {
+        const ball = this.ball;
+        ball.pos.x += ball.vel.x * dt;
+        ball.pos.y += ball.vel.y * dt;
+
+        this.draw();
     }
 }
 
