@@ -55,7 +55,15 @@ class Player extends Rect
     constructor()
     {
         super(20, 100);
+        this.vel = new Vec;
         this.score = 0;
+
+        this._lastPos = new Vec;
+    }
+    update(dt)
+    {
+        this.vel.y = (this.pos.y - this._lastPos.y) / dt;
+        this._lastPos.y = this.pos.y;
     }
 }
 
@@ -129,7 +137,7 @@ class Pong
             player.top < ball.bottom && player.bottom > ball.top) {
             ball.vel.x = -ball.vel.x * 1.05;
             const len = ball.vel.len;
-            ball.vel.y += 300 * (Math.random() - .5);
+            ball.vel.y += player.vel.y * .2;
             ball.vel.len = len;
         }
     }
@@ -199,7 +207,10 @@ class Pong
 
         this.players[1].pos.y = ball.pos.y;
 
-        this.players.forEach(player => this.collide(player, ball));
+        this.players.forEach(player => {
+            player.update(dt);
+            this.collide(player, ball);
+        });
 
         this.draw();
     }
