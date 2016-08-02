@@ -84,12 +84,13 @@ class Pong
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
 
-        const ball = this.ball;
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(ball.left, ball.top, ball.size.x, ball.size.y);
-        this.players.forEach(player => {
-            ctx.fillRect(player.left, player.top, player.size.x, player.size.y);
-        });
+        this.drawRect(this.ball);
+        this.players.forEach(player => this.drawRect(player));
+    }
+    drawRect(rect)
+    {
+        this._context.fillStyle = '#fff';
+        this._context.fillRect(rect.left, rect.top, rect.size.x, rect.size.y);
     }
     start()
     {
