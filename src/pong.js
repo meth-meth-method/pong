@@ -14,6 +14,22 @@ class Rect
         this.pos = new Vec(0, 0);
         this.size = new Vec(x, y);
     }
+    get left()
+    {
+        return this.pos.x - this.size.x / 2;
+    }
+    get right()
+    {
+        return this.pos.x + this.size.x / 2;
+    }
+    get top()
+    {
+        return this.pos.y - this.size.y / 2;
+    }
+    get bottom()
+    {
+        return this.pos.y + this.size.y / 2;
+    }
 }
 
 class Ball extends Rect
@@ -61,7 +77,7 @@ class Pong
 
         const ball = this.ball;
         ctx.fillStyle = '#fff';
-        ctx.fillRect(ball.pos.x, ball.pos.y, ball.size.x, ball.size.y);
+        ctx.fillRect(ball.left, ball.top, ball.size.x, ball.size.y);
     }
     start()
     {
