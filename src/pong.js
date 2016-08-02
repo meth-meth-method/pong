@@ -113,10 +113,10 @@ class Pong
         ball.pos.x += ball.vel.x * dt;
         ball.pos.y += ball.vel.y * dt;
 
-        if (ball.vel.x < 0 && ball.left < 0 ||
-            ball.vel.x > 0 && ball.right > cvs.width) {
-            ball.vel.x = -ball.vel.x;
+        if (ball.right < 0 || ball.left > cvs.width) {
+            ++this.players[ball.vel.x < 0 | 0].score;
         }
+
         if (ball.vel.y < 0 && ball.top < 0 ||
             ball.vel.y > 0 && ball.bottom > cvs.height) {
             ball.vel.y = -ball.vel.y;
