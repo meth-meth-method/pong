@@ -63,6 +63,10 @@ class Pong
         ctx.fillStyle = '#fff';
         ctx.fillRect(ball.pos.x, ball.pos.y, ball.size.x, ball.size.y);
     }
+    start()
+    {
+        requestAnimationFrame(this._frameCallback);
+    }
     update(dt)
     {
         const ball = this.ball;
@@ -75,4 +79,6 @@ class Pong
 
 const canvas = document.querySelector('#pong');
 const pong = new Pong(canvas);
-pong.draw();
+pong.ball.vel.x = 200;
+pong.ball.vel.y = 200;
+pong.start();
