@@ -102,6 +102,14 @@ class Pong
         this._context.fillStyle = '#fff';
         this._context.fillRect(rect.left, rect.top, rect.size.x, rect.size.y);
     }
+    reset()
+    {
+        const b = this.ball;
+        b.vel.x = 0;
+        b.vel.y = 0;
+        b.pos.x = this._canvas.width / 2;
+        b.pos.y = this._canvas.height / 2;
+    }
     start()
     {
         requestAnimationFrame(this._frameCallback);
@@ -115,6 +123,7 @@ class Pong
 
         if (ball.right < 0 || ball.left > cvs.width) {
             ++this.players[ball.vel.x < 0 | 0].score;
+            this.reset();
         }
 
         if (ball.vel.y < 0 && ball.top < 0 ||
