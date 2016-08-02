@@ -77,6 +77,8 @@ class Pong
             lastTime = millis;
             requestAnimationFrame(this._frameCallback);
         };
+
+        this.reset();
     }
     clear()
     {
@@ -101,6 +103,14 @@ class Pong
     {
         this._context.fillStyle = '#fff';
         this._context.fillRect(rect.left, rect.top, rect.size.x, rect.size.y);
+    }
+    play()
+    {
+        const b = this.ball;
+        if (b.vel.x === 0 && b.vel.y === 0) {
+            b.vel.x = 200 * (Math.random() > .5 ? 1 : -1);
+            b.vel.y = 200 * (Math.random() * 2 - 1);
+        }
     }
     reset()
     {
@@ -142,11 +152,10 @@ class Pong
 const canvas = document.querySelector('#pong');
 const pong = new Pong(canvas);
 
+canvas.addEventListener('click', () => pong.play());
+
 canvas.addEventListener('mousemove', event => {
     pong.players[0].pos.y = event.offsetY;
 });
-
-pong.ball.vel.x = 200;
-pong.ball.vel.y = 200;
 
 pong.start();
