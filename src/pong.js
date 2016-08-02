@@ -78,11 +78,14 @@ class Pong
             requestAnimationFrame(this._frameCallback);
         };
     }
+    clear()
+    {
+        this._context.fillStyle = '#000';
+        this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
+    }
     draw()
     {
-        const ctx = this._context;
-        ctx.fillStyle = '#000';
-        ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
+        this.clear();
 
         this.drawRect(this.ball);
         this.players.forEach(player => this.drawRect(player));
