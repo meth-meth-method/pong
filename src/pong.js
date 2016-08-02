@@ -59,6 +59,15 @@ class Pong
 
         this.ball = new Ball;
 
+        this.players = [
+            new Player,
+            new Player,
+        ];
+
+        this.players[0].pos.x = 40;
+        this.players[1].pos.x = this._canvas.width - 40;
+        this.players.forEach(p => p.pos.y = this._canvas.height / 2);
+
         let lastTime = null;
         this._frameCallback = (millis) => {
             if (lastTime !== null) {
@@ -78,6 +87,9 @@ class Pong
         const ball = this.ball;
         ctx.fillStyle = '#fff';
         ctx.fillRect(ball.left, ball.top, ball.size.x, ball.size.y);
+        this.players.forEach(player => {
+            ctx.fillRect(player.left, player.top, player.size.x, player.size.y);
+        });
     }
     start()
     {
