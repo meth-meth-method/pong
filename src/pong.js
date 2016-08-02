@@ -85,9 +85,19 @@ class Pong
     }
     update(dt)
     {
+        const cvs = this._canvas;
         const ball = this.ball;
         ball.pos.x += ball.vel.x * dt;
         ball.pos.y += ball.vel.y * dt;
+
+        if (ball.vel.x < 0 && ball.left < 0 ||
+            ball.vel.x > 0 && ball.right > cvs.width) {
+            ball.vel.x = -ball.vel.x;
+        }
+        if (ball.vel.y < 0 && ball.top < 0 ||
+            ball.vel.y > 0 && ball.bottom > cvs.height) {
+            ball.vel.y = -ball.vel.y;
+        }
 
         this.draw();
     }
