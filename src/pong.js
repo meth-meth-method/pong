@@ -40,11 +40,18 @@ class Pong
     {
         this._canvas = canvas;
         this._context = canvas.getContext('2d');
+
+        this.ball = new Ball;
     }
     draw()
     {
-        this._context.fillStyle = '#000';
-        this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
+        const ctx = this._context;
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
+
+        const ball = this.ball;
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(ball.pos.x, ball.pos.y, ball.size.x, ball.size.y);
     }
 }
 
