@@ -115,12 +115,20 @@ class Pong
             ball.vel.y = -ball.vel.y;
         }
 
+        this.players[1].pos.y = ball.pos.y;
+
         this.draw();
     }
 }
 
 const canvas = document.querySelector('#pong');
 const pong = new Pong(canvas);
+
+canvas.addEventListener('mousemove', event => {
+    pong.players[0].pos.y = event.offsetY;
+});
+
 pong.ball.vel.x = 200;
 pong.ball.vel.y = 200;
+
 pong.start();
