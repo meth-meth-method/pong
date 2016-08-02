@@ -33,3 +33,21 @@ class Player extends Rect
         this.score = 0;
     }
 }
+
+class Pong
+{
+    constructor(canvas)
+    {
+        this._canvas = canvas;
+        this._context = canvas.getContext('2d');
+    }
+    draw()
+    {
+        this._context.fillStyle = '#000';
+        this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
+    }
+}
+
+const canvas = document.querySelector('#pong');
+const pong = new Pong(canvas);
+pong.draw();
