@@ -73,6 +73,7 @@ class Pong
     {
         this._canvas = canvas;
         this._context = canvas.getContext('2d');
+        this._context.imageSmoothingEnabled = false;
 
         this.initialSpeed = 250;
 
@@ -99,28 +100,18 @@ class Pong
 
         this.CHAR_PIXEL = 10;
         this.CHARS = [
-            '111101101101111',
-            '010010010010010',
-            '111001111100111',
-            '111001111001111',
-            '101101111001001',
-            '111100111001111',
-            '111100111101111',
-            '111001001001001',
-            '111101111101111',
-            '111101111001111',
-        ].map(str => {
+            0x7b6f, 0x2492, 0x73e7, 0x73cf, 0x5bc9,
+            0x79cf, 0x79ef, 0x7249, 0x7bef, 0x7bcf,
+        ].map(c => {
             const canvas = document.createElement('canvas');
-            const s = this.CHAR_PIXEL;
-            canvas.height = s * 5;
-            canvas.width = s * 3;
+            canvas.width = 3;
+            canvas.height = 5;
             const context = canvas.getContext('2d');
-            context.fillStyle = '#fff';
-            str.split('').forEach((fill, i) => {
-                if (fill === '1') {
-                    context.fillRect((i % 3) * s, (i / 3 | 0) * s, s, s);
-                }
-            });
+            const img = context.getImageData(0, 0, canvas.width, canvas.height);
+            const arr = new Uint32Array(img.width * img.height)
+                .map((_, i) => (c & 1 << i) ? ~0 : 0).reverse();
+            img.data.set(new Uint8ClampedArray(arr.buffer));
+            context.putImageData(img, 0, 0);
             return canvas;
         });
 
@@ -158,12 +149,14 @@ class Pong
     drawScore()
     {
         const align = this._canvas.width / 3;
-        const cw = this.CHAR_PIXEL * 4;
+        const s = this.CHAR_PIXEL;
+        const cw = s * 4;
         this.players.forEach((player, index) => {
             const chars = player.score.toString().split('');
-            const offset = align * (index + 1) - (cw * chars.length / 2) + this.CHAR_PIXEL / 2;
+            const offset = align * (index + 1) - (cw * chars.length / 2) + s / 2;
             chars.forEach((char, pos) => {
-                this._context.drawImage(this.CHARS[char|0], offset + pos * cw, 20);
+                const img = this.CHARS[char|0];
+                this._context.drawImage(img, offset + pos * cw, 20, s * img.width, s * img.height);
             });
         });
     }
