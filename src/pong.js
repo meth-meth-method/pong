@@ -22,6 +22,7 @@ class Rect
     {
         this.pos = new Vec(0, 0);
         this.size = new Vec(x, y);
+        this.color = '#fff';
     }
     get left()
     {
@@ -82,6 +83,10 @@ class Pong
             new Player,
             new Player,
         ];
+        
+        this.players[0].color = 'blue';
+        this.players[1].color = 'red';
+        this.ball.color = 'purple';
 
         this.players[0].pos.x = 40;
         this.players[1].pos.x = this._canvas.width - 40;
@@ -152,7 +157,7 @@ class Pong
     }
     drawRect(rect)
     {
-        this._context.fillStyle = '#fff';
+        this._context.fillStyle = rect.color;
         this._context.fillRect(rect.left, rect.top, rect.size.x, rect.size.y);
     }
     drawScore()
