@@ -133,8 +133,11 @@ class Pong
     }
     collide(player, ball)
     {
-        if (player.left < ball.right && player.right > ball.left &&
-            player.top < ball.bottom && player.bottom > ball.top) {
+        if (
+            ((ball.vel.x > 0 && ball.right > player.left && ball.right < player.right) ||
+            (ball.vel.x < 0 && ball.left < player.right && ball.left > player.left)) &&
+            player.top < ball.bottom && player.bottom > ball.top
+        ) {
             ball.vel.x = -ball.vel.x * 1.05;
             const len = ball.vel.len;
             ball.vel.y += player.vel.y * .2;
